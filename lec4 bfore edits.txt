@@ -1,0 +1,57 @@
+const express=require('express')
+const app=express()
+app.use(express.json())//body parser for reading the incoming body
+//let {cources}=require("./data/cources")
+const courcesrouter=require("./routs/routs")
+//app.use("/",courcesrouter)//localhost / =>/api/courcesبدل ما اكتب البداية ديه ديما في الاوامؤ انا هثبتها واباصي المختلف منعا للتكرار
+const {body,validationResult}=require('express-validator')//middleware
+const courcescont=require("./controllers/courcescontroller")
+//crud optRAions(creat,read,update,delete)
+//get all cources
+//route =>resources
+/*app.get("/api/cources", (req, res) => {
+   
+res.json(cources)//sending jason
+})*/app.get("/api/cources", courcescont.getallcources)
+
+//get  single course of id
+                    //':'-->for making course id dynamic
+/*app.get("/api/cources/:courseId", (req, res) => {
+   const courseId=+req.params.courseId//to make id dynamic
+  const course=cources.find((course)=>course.id===courseId)
+res.json(course);//send data as jason
+})*/app.get("/api/cources/:courseId", courcescont.getcourse)
+//create cources
+//                     valedations using express validator 
+/*app.post("/api/courses",body('title').notEmpty().isLength({min:2}) ,(req, res) => 
+{//req.body  :the written reqwest data
+
+    console.log(req.body);
+//const errors=validationResult(req);//result of errors if happend
+//console.log(errors.json())//errors in jason shape
+cources.push({id:cources.length+1,...req.body});
+
+res.json(cources)
+
+})*/app.post("/api/courses",body('title').notEmpty().isLength({min:2}) ,courcescont.addcourse)
+//update cources  put:remove old data   patch:overide old data
+/*app.patch('/api/cources/:courceId',(req,res)=>{
+    let courceId=+req.params.courceId;
+    let course=cources.find((course)=>course.id===courceId)
+    course={...course,...req.body}
+res.status(200).json(cources)
+
+})*/app.patch('/api/cources/:courceId',courcescont.updatecourse)
+//delete course
+/*app.delete('/api/cources/:courceId',(req,res)=>{
+    let courceId=+req.params.courceId;
+    cources=cources.filter((ele)=>{ele.id!==courceId});
+    res.json({success:true})
+}
+)
+*/app.delete('/api/cources/:courceId',courcescont.deletecourse)
+////
+
+app.listen(5000,()=>{
+console.log("working...working...working...")
+}) 

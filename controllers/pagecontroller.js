@@ -1,0 +1,11 @@
+module.exports={
+    showevent:(req,res)=>{
+        res.render('pages/home.ejs')
+    },
+    showcontact:(req,res)=>{
+        res.render('pages/contact.ejs')
+    },
+    createevent:(req,res)=>{
+        res.render('pages/create.ejs')
+    }
+}

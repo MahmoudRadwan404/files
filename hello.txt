@@ -1,0 +1,1 @@
+hello worled from non nodemon yay it works 
